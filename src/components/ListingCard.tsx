@@ -20,7 +20,7 @@ const ListingCard: React.FC<ListingCardProps> = ({ listing }) => {
           {isLiked ? '❤️' : '🤍'}
         </button>
       </div>
-      <img src={listing.userData.linkToPhotos || 'https://via.placeholder.com/300x200'} alt={listing.address.formattedAddress} />
+      <img src={listing.userData.linkToPhotos || 'https://dummyimage.com/300x200/006df2/fb00ff.png&text=any+test+text'} alt={listing.address.formattedAddress} />
       <div className="card-body">
         <h3>${`${listing.userData.askingPrice}`}</h3>
         <p>{listing.address.formattedAddress}</p>
