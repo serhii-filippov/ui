@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { FiltersState } from '../types/types';
+import { FiltersState } from '../types';
 
 const initialState: FiltersState = {
   sortBy: 'newest',

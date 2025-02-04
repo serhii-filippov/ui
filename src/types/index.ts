@@ -51,7 +51,7 @@ export interface ListingItem {
       livingAreaValue: number;
       homeType: string;
       bedrooms: number;
-      bathrooms: null;
+      bathrooms: number | null;
       homeStatus: 'FOR_SALE' | 'SOLD' | 'OTHER';
       hdpUrl: string;
       dateSold: string;

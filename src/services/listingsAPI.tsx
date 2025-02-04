@@ -1,5 +1,5 @@
 import { config } from '../features/utils';
-import { ListingItem } from '../types/types';
+import { ListingItem } from '../types';
 
 export const fetchListings = async (): Promise<ListingItem[]> => {
   const response = await fetch(config.API_URL);

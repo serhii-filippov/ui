@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { fetchListings } from '../services/listingsAPI';
-import { ListingItem, ListingsState } from '../types/types';
+import { ListingItem, ListingsState } from '../types';
 
 const initialState: ListingsState = {
   listings: [],

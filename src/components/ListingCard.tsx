@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ListingItem } from '../types/types';
+import { ListingItem } from '../types';
 
 interface ListingCardProps {
   listing: ListingItem;
