@@ -47,7 +47,7 @@ const HomePage: React.FC = () => {
     });
 
   return (
-    <div className="app">
+    <div className="listings-container">
         <h1>Homes for sale in Tampa</h1>
         <h4>{filteredListings.length} listings found — Listed on the MLS. Provided by Opendoor Brokerage.</h4>
         <SearchBar />

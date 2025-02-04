@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ListingItem } from '../types/types';
 
 interface ListingCardProps {
@@ -6,18 +6,26 @@ interface ListingCardProps {
 }
 
 const ListingCard: React.FC<ListingCardProps> = ({ listing }) => {
-  const imageUrl = listing.userData.linkToPhotos || 'https://via.placeholder.com/300x200';
+  const [isLiked, setIsLiked] = useState(false);
+
+  const toggleLike = () => {
+    setIsLiked(!isLiked);
+  };
+
   return (
     <div className="listing-card">
-      <img src={imageUrl} alt={listing.address.formattedAddress} />
-      <h3>{listing.address.formattedAddress}</h3>
-      <p>Price: ${listing.userData.askingPrice}</p>
-      <p>Status: {listing.zillowData?.homeStatus}</p>
-      <p>Bedrooms: {listing.zillowData?.bedrooms}</p>
-      <p>Bathrooms: {listing.zillowData?.bathrooms}</p>
-      <p>Year Built: {listing.zillowData?.yearBuilt}</p>
-      <p>Lot Size: {listing.zillowData?.lotSize} sqft</p>
-      <p>Zestimate: ${listing.zillowData?.zestimate}</p>
+      <div className="card-header">
+        <div className="badge">Opendoor</div>
+        <button className="like-button" onClick={toggleLike}>
+          {isLiked ? '❤️' : '🤍'}
+        </button>
+      </div>
+      <img src={listing.userData.linkToPhotos || 'https://via.placeholder.com/300x200'} alt={listing.address.formattedAddress} />
+      <div className="card-body">
+        <h3>${`${listing.userData.askingPrice}`}</h3>
+        <p>{listing.address.formattedAddress}</p>
+        <p>Beds: {listing.zillowData?.bedrooms} | Baths: {listing.zillowData?.bathrooms} | sqft: {listing.zillowData?.livingAreaValue}</p>
+      </div>
     </div>
   );
 };
