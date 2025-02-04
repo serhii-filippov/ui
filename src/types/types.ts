@@ -4,15 +4,7 @@ export interface ListingItem {
   userData: UserData;
   zillowData: ZillowData;
 }
-export interface Listing {
-    id: string;
-    address: string;
-    price: number;
-    status: 'active' | 'sold';
-    image: string;
-    date: string;
-  }
-  
+ 
   export interface ListingsState {
     listings: ListingItem[];
     status: 'idle' | 'loading' | 'succeeded' | 'failed';
