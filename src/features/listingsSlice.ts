@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { fetchListings } from '../services/listingsAPI';
-import { Listing, ListingsState } from '../types/types';
+import { ListingItem, ListingsState } from '../types/types';
 
 const initialState: ListingsState = {
   listings: [],
@@ -8,7 +8,7 @@ const initialState: ListingsState = {
   error: null,
 };
 
-export const fetchListingsAsync = createAsyncThunk<Listing[]>(
+export const fetchListingsAsync = createAsyncThunk<ListingItem[]>(
   'listings/fetchListings',
   async () => {
     const response = await fetchListings();

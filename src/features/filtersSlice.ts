@@ -14,7 +14,7 @@ const filtersSlice = createSlice({
     setSortBy: (state, action: PayloadAction<'newest' | 'oldest'>) => {
       state.sortBy = action.payload;
     },
-    setStatusFilter: (state, action: PayloadAction<'all' | 'active' | 'sold'>) => {
+    setStatusFilter: (state, action: PayloadAction<'all' | 'active' | 'sold' | 'other'>) => {
       state.statusFilter = action.payload;
     },
     setSearchQuery: (state, action: PayloadAction<string>) => {

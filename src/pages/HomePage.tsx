@@ -1,16 +1,20 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchListingsAsync } from '../features/listingsSlice';
-import { setSortBy, setStatusFilter } from '../features/filtersSlice';
 import { AppDispatch, RootState } from '../store';
 import ListingCard from '../components/ListingCard';
 import SearchBar from '../components/SearchBar';
 import SortControls from '../components/SortControls';
+import { mapStatusFilter } from '../features/utils';
 
 const HomePage: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
-  const { listings, status } = useSelector((state: RootState) => state.listings);
-  const { sortBy, statusFilter, searchQuery } = useSelector((state: RootState) => state.filters);
+  const { listings } = useSelector((state: RootState) => state.listings);
+  const {
+    sortBy,
+    statusFilter,
+    searchQuery,
+} = useSelector((state: RootState) => state.filters);
 
   useEffect(() => {
     dispatch(fetchListingsAsync());
@@ -18,32 +22,48 @@ const HomePage: React.FC = () => {
 
   const filteredListings = listings
     .filter((listing) =>
-      listing.address.toLowerCase().includes(searchQuery.toLowerCase())
+        listing.address?.formattedAddress?.toLowerCase().includes(searchQuery?.toLowerCase())
     )
     .filter((listing) =>
-      statusFilter === 'all' ? true : listing.status === statusFilter
+      statusFilter === 'all' ?
+        true :
+        listing.zillowData?.homeStatus === mapStatusFilter(statusFilter)
     )
     .sort((a, b) => {
-      if (sortBy === 'newest') return new Date(b.date).getTime() - new Date(a.date).getTime();
-      return new Date(a.date).getTime() - new Date(b.date).getTime();
+        let dateA = a?.zillowData?.dateSold;
+        let dateB = b?.zillowData?.dateSold;
+        if (dateA === null || dateA === undefined) {
+            dateA = `${Date.now()}`;
+        }
+        if (dateB === null || dateB === undefined) {
+            dateB = `${Date.now()}`;
+        }
+        
+        if (sortBy === 'newest') {
+            return new Date(dateB).getTime() - new Date(dateA).getTime();
+        }
+
+        return new Date(dateA).getTime() - new Date(dateB).getTime();
     });
 
   return (
-    <div>
-      <SearchBar />
-      <SortControls />
-      <div className="listings-grid">
-        {filteredListings.map((listing, index) => (
-          <React.Fragment key={listing.id}>
-            <ListingCard listing={listing} />
-            {index === 1 && (
-              <div className="offer-banner">
-                Make your strongest offer when you buy with Opendoor
-              </div>
-            )}
-          </React.Fragment>
-        ))}
-      </div>
+    <div className="app">
+        <h1>Homes for sale in Tampa</h1>
+        <h4>{filteredListings.length} listings found — Listed on the MLS. Provided by Opendoor Brokerage.</h4>
+        <SearchBar />
+        <SortControls />
+        <div className="listings-grid">
+            {filteredListings.map((listing, index) => (
+                <React.Fragment key={listing._id}>
+                <ListingCard listing={listing} />
+                {index === 1 && (
+                    <div className="offer-banner">
+                        Make your strongest offer when you buy with Opendoor
+                    </div>
+                )}
+                </React.Fragment>
+            ))}
+        </div>
     </div>
   );
 };
